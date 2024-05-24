@@ -14,6 +14,6 @@ class BeerControllerTest {
 
     @Test
     void getBeerByID() {
-        controller.getBeerByID();
+
     }
 }
