@@ -3,6 +3,7 @@ package com.batista.spring6restmvc.service;
 import com.batista.spring6restmvc.model.Beer;
 import com.batista.spring6restmvc.model.BeerStyle;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -68,5 +69,25 @@ public class BeerServiceImpl implements BeerService {
     public Beer getById(UUID id) {
         log.debug("IN Service");
         return beerMap.get(id);
+    }
+
+    @Override
+    public Beer saveBeer(Beer beer) {
+
+        Beer savedBear = Beer.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .beerName(beer.getBeerName())
+                .bearStyle(beer.getBearStyle())
+                .upc(beer.getUpc())
+                .price(beer.getPrice())
+                .quantityOnHand(beer.getQuantityOnHand())
+                .createdDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
+                .build();
+
+         beerMap.put(savedBear.getId(), savedBear);
+
+        return  savedBear;
     }
 }
