@@ -4,11 +4,10 @@ import com.batista.spring6restmvc.model.Beer;
 import com.batista.spring6restmvc.service.BeerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +24,10 @@ public class BeerController {
 
         Beer savedBear = beerService.saveBeer(beer);
 
-        return new ResponseEntity(savedBear, HttpStatus.CREATED);
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("Location", "/api/v1/beer/" + savedBear.getId());
+        return new ResponseEntity(savedBear, headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET)
